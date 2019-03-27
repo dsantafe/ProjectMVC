@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c6be500e860f4e5c886abe8d7bf66b6d" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectMVCModel.Artifacts" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.AspNetUsers" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Members" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Projects" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Tenants" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectMVCModel.UserProjects" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Artifacts_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK__AspNetUse__Tenan__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK__Members__UserId__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK__UserProje__UserI__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Projects_Tenants" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.FK_UserProjects_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectMVCModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
