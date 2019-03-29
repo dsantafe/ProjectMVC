@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Artifacts">
           <Key>
             <PropertyRef Name="Id" />
@@ -79,6 +87,14 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="UpdatedAt" Type="datetime" />
         </EntityType>
+        <EntityType Name="Priorities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Projects">
           <Key>
             <PropertyRef Name="Id" />
@@ -90,6 +106,30 @@
           <Property Name="TenantId" Type="int" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="UpdatedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Details" Type="varchar" MaxLength="100" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="IsCompleted" Type="bit" />
+          <Property Name="Effort" Type="int" />
+          <Property Name="RemainingWork" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="ActivityId" Type="int" />
+          <Property Name="PriorityId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
         </EntityType>
         <EntityType Name="Tenants">
           <Key>
@@ -227,6 +267,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tasks_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Priorities">
+          <End Role="Priorities" Type="Self.Priorities" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priorities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="PriorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_States">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserProjects_Projects">
           <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
           <End Role="UserProjects" Type="Self.UserProjects" Multiplicity="*" />
@@ -240,6 +328,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProjectMVCModelStoreContainer">
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artifacts" EntityType="Self.Artifacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -247,7 +336,10 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Priorities" EntityType="Self.Priorities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tenants" EntityType="Self.Tenants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProjects" EntityType="Self.UserProjects" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__AspNetUse__Tenan__3D5E1FD2" Association="Self.FK__AspNetUse__Tenan__3D5E1FD2">
@@ -286,13 +378,28 @@
             <End Role="Tenants" EntitySet="Tenants" />
             <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Activities" Association="Self.FK_Tasks_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Priorities" Association="Self.FK_Tasks_Priorities">
+            <End Role="Priorities" EntitySet="Priorities" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Projects" Association="Self.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_States" Association="Self.FK_Tasks_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserProjects_Projects" Association="Self.FK_UserProjects_Projects">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="UserProjects" EntitySet="UserProjects" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -387,6 +494,7 @@
           <NavigationProperty Name="Artifacts" Relationship="Self.FK_Artifacts_Projects" FromRole="Projects" ToRole="Artifacts" />
           <NavigationProperty Name="Tenants" Relationship="Self.FK_Projects_Tenants" FromRole="Projects" ToRole="Tenants" />
           <NavigationProperty Name="UserProjects" Relationship="Self.FK_UserProjects_Projects" FromRole="Projects" ToRole="UserProjects" />
+          <NavigationProperty Name="Tasks" Relationship="ProjectMVCModel.FK_Tasks_Projects" FromRole="Projects" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="Tenants">
           <Key>
@@ -562,7 +670,122 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Activities" EntityType="ProjectMVCModel.Activities" />
+          <EntitySet Name="Priorities" EntityType="ProjectMVCModel.Priorities" />
+          <EntitySet Name="States" EntityType="ProjectMVCModel.States" />
+          <EntitySet Name="Tasks" EntityType="ProjectMVCModel.Tasks" />
+          <AssociationSet Name="FK_Tasks_Activities" Association="ProjectMVCModel.FK_Tasks_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Priorities" Association="ProjectMVCModel.FK_Tasks_Priorities">
+            <End Role="Priorities" EntitySet="Priorities" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Projects" Association="ProjectMVCModel.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_States" Association="ProjectMVCModel.FK_Tasks_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Tasks" Relationship="ProjectMVCModel.FK_Tasks_Activities" FromRole="Activities" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Priorities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Tasks" Relationship="ProjectMVCModel.FK_Tasks_Priorities" FromRole="Priorities" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Tasks" Relationship="ProjectMVCModel.FK_Tasks_States" FromRole="States" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="IsCompleted" Type="Boolean" />
+          <Property Name="Effort" Type="Int32" />
+          <Property Name="RemainingWork" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="ActivityId" Type="Int32" />
+          <Property Name="PriorityId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <NavigationProperty Name="Activities" Relationship="ProjectMVCModel.FK_Tasks_Activities" FromRole="Tasks" ToRole="Activities" />
+          <NavigationProperty Name="Priorities" Relationship="ProjectMVCModel.FK_Tasks_Priorities" FromRole="Tasks" ToRole="Priorities" />
+          <NavigationProperty Name="Projects" Relationship="ProjectMVCModel.FK_Tasks_Projects" FromRole="Tasks" ToRole="Projects" />
+          <NavigationProperty Name="States" Relationship="ProjectMVCModel.FK_Tasks_States" FromRole="Tasks" ToRole="States" />
+        </EntityType>
+        <Association Name="FK_Tasks_Activities">
+          <End Type="ProjectMVCModel.Activities" Role="Activities" Multiplicity="0..1" />
+          <End Type="ProjectMVCModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ActivityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Priorities">
+          <End Type="ProjectMVCModel.Priorities" Role="Priorities" Multiplicity="0..1" />
+          <End Type="ProjectMVCModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Priorities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="PriorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Projects">
+          <End Type="ProjectMVCModel.Projects" Role="Projects" Multiplicity="0..1" />
+          <End Type="ProjectMVCModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_States">
+          <End Type="ProjectMVCModel.States" Role="States" Multiplicity="0..1" />
+          <End Type="ProjectMVCModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -682,6 +905,50 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="ProjectMVCModel.Activities">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Priorities">
+            <EntityTypeMapping TypeName="ProjectMVCModel.Priorities">
+              <MappingFragment StoreEntitySet="Priorities">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="ProjectMVCModel.States">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="ProjectMVCModel.Tasks">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="RemainingWork" ColumnName="RemainingWork" />
+                <ScalarProperty Name="Effort" ColumnName="Effort" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -34,5 +34,9 @@ namespace ProjectMVC.DAL.Models
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<Tenants> Tenants { get; set; }
         public virtual DbSet<UserProjects> UserProjects { get; set; }
+        public virtual DbSet<Activities> Activities { get; set; }
+        public virtual DbSet<Priorities> Priorities { get; set; }
+        public virtual DbSet<States> States { get; set; }
+        public virtual DbSet<Tasks> Tasks { get; set; }
     }
 }

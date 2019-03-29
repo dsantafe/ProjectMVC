@@ -23,6 +23,14 @@
         <AssociationConnector Association="ProjectMVCModel.FK_Projects_Tenants" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectMVCModel.FK_UserProjects_Projects" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectMVCModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Activities" Width="1.5" PointX="6" PointY="24.875" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Priorities" Width="1.5" PointX="6" PointY="22.25" />
+        <EntityTypeShape EntityType="ProjectMVCModel.States" Width="1.5" PointX="6" PointY="19.75" />
+        <EntityTypeShape EntityType="ProjectMVCModel.Tasks" Width="1.5" PointX="8.25" PointY="15.25" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Tasks_Activities" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Tasks_Priorities" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Tasks_Projects" />
+        <AssociationConnector Association="ProjectMVCModel.FK_Tasks_States" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
