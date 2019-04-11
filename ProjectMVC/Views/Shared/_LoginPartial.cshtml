@@ -6,9 +6,12 @@
         @Html.AntiForgeryToken()
 
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                @Html.ActionLink("Add Members", "Create", "Members", null, htmlAttributes: new { @class = "btn btn-danger" })
-            </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    @Html.ActionLink("Add Members", "Create", "Members", null, htmlAttributes: new { @class = "btn btn-danger" })
+                </li>
+            }
             <li class="nav-item">
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
             </li>

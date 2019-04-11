@@ -7,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
 
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+            integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+            crossorigin="anonymous"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>*@
     <script src="~/Scripts/popper.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
@@ -19,6 +23,13 @@
     <!-- Site -->
     <link rel="stylesheet" href="~/Content/Site.css">
     <script src="~/Scripts/Site.js"></script>
+
+    <!-- FullCalendar -->
+    <link href='~/Libs/fullcalendar-4.0.2/packages/core/main.css' rel='stylesheet' />
+    <link href='~/Libs/fullcalendar-4.0.2/packages/daygrid/main.css' rel='stylesheet' />
+    <script src='~/Libs/fullcalendar-4.0.2/packages/core/main.js'></script>
+    <script src='~/Libs/fullcalendar-4.0.2/packages/interaction/main.js'></script>
+    <script src='~/Libs/fullcalendar-4.0.2/packages/daygrid/main.js'></script>
 </head>
 <body>
     <div class="d-flex" id="wrapper">
