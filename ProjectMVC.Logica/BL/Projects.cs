@@ -29,7 +29,7 @@ namespace ProjectMVC.Logica.BL
             if (!string.IsNullOrEmpty(userId))
                 listProjectsEF = (from _projects in listProjectsEF
                                   join _userProjects in db.UserProjects on _projects.Id equals _userProjects.ProjectId
-                                  where _userProjects.Id.Equals(userId)
+                                  where _userProjects.UserId.Equals(userId)
                                   select _projects);
 
             var listProjects = (from _projects in listProjectsEF

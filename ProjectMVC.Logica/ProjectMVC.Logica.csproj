@@ -49,22 +49,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\Activities.cs" />
+    <Compile Include="BL\AspNetUsers.cs" />
     <Compile Include="BL\Priorities.cs" />
     <Compile Include="BL\Projects.cs" />
     <Compile Include="BL\States.cs" />
     <Compile Include="BL\Tasks.cs" />
     <Compile Include="BL\Tenants.cs" />
+    <Compile Include="BL\UserProjects.cs" />
     <Compile Include="Models\BindingModels\ProjectsBindingModel.cs" />
     <Compile Include="Models\BindingModels\TasksBindingModel.cs" />
     <Compile Include="Models\DB\Activities.cs" />
     <Compile Include="Models\DB\AspNetRoles.cs" />
+    <Compile Include="Models\DB\AspNetUsers.cs" />
     <Compile Include="Models\DB\Priorities.cs" />
     <Compile Include="Models\DB\Projects.cs" />
     <Compile Include="Models\DB\States.cs" />
     <Compile Include="Models\DB\Tasks.cs" />
     <Compile Include="Models\DB\Tenants.cs" />
+    <Compile Include="Models\DB\UserProjects.cs" />
     <Compile Include="Models\ViewModels\ProjectsViewModel.cs" />
     <Compile Include="Models\ViewModels\TasksViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserProjectsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
