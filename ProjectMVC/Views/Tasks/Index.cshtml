@@ -21,6 +21,12 @@
     new { projectId = ViewBag.Project.Id },
     new { @class = "btn btn-primary fas fa-plus-circle" })
 
+@Html.ActionLink(" ",
+    "Calendar",
+    "Tasks",
+    new { projectId = ViewBag.Project.Id },
+    new { @class = "btn btn-primary fas fa-calendar-alt" })
+
 <table class="table table-bordered">
     <tr>
         <td>@Html.DisplayNameFor(model => model.Title)</td>

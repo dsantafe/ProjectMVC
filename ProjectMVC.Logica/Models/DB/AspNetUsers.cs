@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ProjectMVC.Logica.Models.DB
 {
     public class AspNetUsers
     {
-        public AspNetUsers()
-        {
-            Tenants = new Tenants();
-        }
-
         public string Id { get; set; }
         public string Email { get; set; }
         public bool? EmailConfirmed { get; set; }
@@ -23,6 +22,6 @@ namespace ProjectMVC.Logica.Models.DB
         public string UserName { get; set; }
         public int? TenantId { get; set; }
 
-        public Tenants Tenants { get; set; }
+        public virtual Tenants Tenants { get; set; }
     }
 }

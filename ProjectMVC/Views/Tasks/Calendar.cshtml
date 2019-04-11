@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Calendar</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            @Html.ActionLink("Projects", "Index", "Projects")
+        </li>
+        <li class="breadcrumb-item">
+            @Html.ActionLink("Tasks", "Index", "Tasks", new { @ViewBag.Project.Id })
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Tasks of @ViewBag.Project.Title</li>
+    </ol>
+</nav>
+<div id="divErrors" style="display:none" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>
+        <span id="errors"></span>
+    </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<hr>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-md-8">
+            <div id='calendar'></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Details</h5>
+                    <p class="card-text">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Title</label>
+                                <input id="Title" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Details</label>
+                                <textarea id="Details" class="form-control" value="-" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Expiration Date</label>
+                                <input id="ExpirationDate" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Effort</label>
+                                <input id="Effort" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Remaining Work</label>
+                                <input id="RemainingWork" class="form-control" value="-">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>State</label>
+                                <input id="State" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Activity</label>
+                                <input id="Activity" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Priority</label>
+                                <input id="Priority" class="form-control" value="-" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="button" id="Update" name="Update" class="btn btn-primary" value="Update" style="display:none">
+                            </div>
+                        </div>
+                    </p>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var projectId = @Html.ViewBag.Project.Id;
+
+    $(function () {
+        GetTasks(projectId);
+    });
+
+    function GetTasks(projectId) {
+
+        var events = [];
+
+        $.post("/Tasks/CalendarJSON?projectId=" + projectId).done(function (data) {
+            var isSuccessful = data.IsSuccessful;
+
+            if (isSuccessful) {
+                var json = data.ListTasksCalendar;
+
+                for (var i = 0; i < json.length; i++) {
+                    events.push({
+                        title: json[i].Title,
+                        start: json[i].Start,
+                        end: json[i].End,
+                        id: json[i].Id,
+                        color: json[i].Color,
+                        allDay: json[i].AllDay,
+                        textColor: json[i].TextColor
+                    });
+                }
+
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    plugins: ['interaction', 'dayGrid'],
+                    header: {
+                        left: 'prevYear,prev,next,nextYear today',
+                        center: 'title',
+                        right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                    },
+                    navLinks: true,
+                    events: events,
+                    eventClick: function (eventObj) {
+                        GetTask(eventObj.event.id);
+                    }
+                });
+
+                calendar.render();
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+        });
+    }
+
+    function GetTask(id) {
+        $.post("/Tasks/GetTasksJSON?id=" + id).done(function (data) {
+            var isSuccessful = data.IsSuccessful;
+
+            if (isSuccessful) {
+                var json = data.Task;
+
+                $('#Id').val(json.Id);
+                $('#Title').val(json.Title);
+                $('#Details').val(json.Details);
+                $('#ExpirationDate').val(json.ExpirationDate);
+                $('#Effort').val(json.Effort);
+                $('#RemainingWork').val(json.RemainingWork);
+                $('#State').val(json.State);
+                $('#Activity').val(json.Activity);
+                $('#Priority').val(json.Priority);
+
+                $('#Update').css('display', 'block');
+
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+        });
+    }
+
+    function displayValidationErrors(errors) {
+        var $ul = $('<ul>');
+
+        $ul.empty();
+        $.each(errors, function (idx, errorMessage) {
+            $ul.append('<li>' + errorMessage + '</li>');
+        });
+
+        $('#errors').html($ul);
+        $('#divErrors').show();
+    }
+</script>
+
+<style>
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+</style>

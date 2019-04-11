@@ -3,5 +3,38 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Users for project @ViewBag.Project</h2>
+<div class="form-group">
+    <div class="col-md-12">
+        <table class="table table-bordered table-responsive">
+            @foreach (ProjectMVC.Logica.Models.ViewModels.UserProjectsIndexViewModel item in ViewBag.ListUsersProject)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(" ", "AddUser", "UserProjects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-minus" })
+                    </td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
 
+<div class="form-group">
+    <div class="col-md-12">
+        <h2>Users to add to project @ViewBag.Project</h2>
+        <table class="table table-bordered table-responsive">
+            @foreach (ProjectMVC.Logica.Models.ViewModels.UserProjectsIndexViewModel item in ViewBag.ListUsers)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(" ", "RemoveUser", "UserProjects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-plus" })
+                    </td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
