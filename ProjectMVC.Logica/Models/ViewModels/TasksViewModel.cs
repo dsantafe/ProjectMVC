@@ -40,7 +40,7 @@ namespace ProjectMVC.Logica.Models.ViewModels
     #endregion
 
     #region TasksCalendarViewModel
-    public class TasksCalendarViewModel
+    public class TasksGetTasksCalendarViewModel
     {
         public int Id { get; set; }
 
@@ -80,7 +80,7 @@ namespace ProjectMVC.Logica.Models.ViewModels
         public int? RemainingWork { get; set; }
 
         [Display(Name = "State")]
-        public string State { get; set; }
+        public int? StateId { get; set; }
 
         [Display(Name = "Activity")]
         public string Activity { get; set; }

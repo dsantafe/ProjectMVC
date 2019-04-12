@@ -32,7 +32,10 @@
         <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Details</h5>
+                    <h5 class="card-title">
+                        Details
+                        <input id="Id" hidden>
+                    </h5>
                     <p class="card-text">
                         <div class="form-group">
                             <div class="col-md-12">
@@ -61,13 +64,13 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Remaining Work</label>
-                                <input id="RemainingWork" class="form-control" value="-">
+                                <select id="RemainingWork" class="form-control"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>State</label>
-                                <input id="State" class="form-control" value="-" disabled>
+                                <select id="StateId" class="form-control"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -84,10 +87,17 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
+                                <label>Is Completed</label>
+                                <br />
+                                <input id="IsCompleted" type="checkbox" class="form-check">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
                                 <input type="button" id="Update" name="Update" class="btn btn-primary" value="Update" style="display:none">
                             </div>
                         </div>
-                    </p>                    
+                    </p>
                 </div>
             </div>
         </div>
@@ -100,13 +110,38 @@
 
     $(function () {
         GetTasks(projectId);
+
+        $('#Update').click(function () {
+            UpdateTask();
+        });
     });
+
+    function UpdateTask() {
+        var json = {
+            'Id': $('#Id').val(),
+            'IsCompleted': $('.IsCompleted').prop('checked') ?  true : false,
+            'RemainingWork': $('#RemainingWork').val(),
+            'StateId': $('#StateId').val()
+        };
+
+        $.post("/Tasks/Update", json).done(function(data){
+            var isSuccessful = data.IsSuccessful;
+
+            if (isSuccessful) {
+                swal("Good job!", "The process has been successfully!.", "success");
+                window.location = '/Tasks/Calendar?projectId=' + projectId;
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+        });
+    }
 
     function GetTasks(projectId) {
 
         var events = [];
 
-        $.post("/Tasks/CalendarJSON?projectId=" + projectId).done(function (data) {
+        $.post("/Tasks/GetTasksCalendar?projectId=" + projectId).done(function (data) {
             var isSuccessful = data.IsSuccessful;
 
             if (isSuccessful) {
@@ -149,21 +184,48 @@
     }
 
     function GetTask(id) {
-        $.post("/Tasks/GetTasksJSON?id=" + id).done(function (data) {
+        $.post("/Tasks/Details?id=" + id).done(function (data) {
             var isSuccessful = data.IsSuccessful;
 
             if (isSuccessful) {
-                var json = data.Task;
+                var task = data.Task;
 
-                $('#Id').val(json.Id);
-                $('#Title').val(json.Title);
-                $('#Details').val(json.Details);
-                $('#ExpirationDate').val(json.ExpirationDate);
-                $('#Effort').val(json.Effort);
-                $('#RemainingWork').val(json.RemainingWork);
-                $('#State').val(json.State);
-                $('#Activity').val(json.Activity);
-                $('#Priority').val(json.Priority);
+                $('#Id').val(task.Id);
+                $('#Title').val(task.Title);
+                $('#Details').val(task.Details);
+                $('#ExpirationDate').val(task.ExpirationDate);
+                $('#Effort').val(task.Effort);
+
+                $('#State').val(task.State);
+                $('#Activity').val(task.Activity);
+                $('#Priority').val(task.Priority);
+
+                var remainingWork = $("#RemainingWork");
+                remainingWork.empty();
+
+                for (var i = task.RemainingWork; i >= 0; i--) {
+                    var option = $("<option />");
+                    option.html(i);
+                    option.val(i);
+                    remainingWork.append(option);
+                }
+
+                remainingWork.val(task.RemainingWork);
+
+                var states = $("#StateId");
+                states.empty();
+
+                $(data.States).each(function () {
+                    var option = $("<option />");
+                    option.html(this.Name);
+                    option.val(this.Id);
+                    states.append(option);
+                });
+
+                states.val(task.StateId);
+
+                $("#RemainingWork").prop('min', 0);
+                $("#RemainingWork").prop('max', task.RemainingWork);
 
                 $('#Update').css('display', 'block');
 
