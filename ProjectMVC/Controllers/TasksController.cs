@@ -30,7 +30,8 @@ namespace ProjectMVC.Controllers
             }).ToList();
 
             Logica.BL.Projects projects = new Logica.BL.Projects();
-            var project = projects.GetProjects(projectId, null).FirstOrDefault();
+            var project = 
+                projects.GetProjects(projectId, null).FirstOrDefault();
 
             ViewBag.Project = project;
 
