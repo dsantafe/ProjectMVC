@@ -4,14 +4,30 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Users for project @ViewBag.Project</h2>
+<h2>Users Project</h2>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            @Html.ActionLink("Projects", "Index", "Projects")
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+</nav>
+
 <div class="form-group">
     <div class="col-md-12">
-        <table class="table table-bordered table-responsive">
+        <h2>Users for project <label class="badge badge-primary">@ViewBag.Project.Title</label> </h2>
+        <table class="table table-bordered">
+            <tr>
+                <td class="text-center"><i class="fas fa-users"></i></td>
+                <td>@Html.DisplayNameFor(m => m.UsersProject.FirstOrDefault().UserName)</td>
+                <td>@Html.DisplayNameFor(m => m.UsersProject.FirstOrDefault().Email)</td>
+            </tr>
             @foreach (var item in Model.UsersProject)
             {
                 <tr>
-                    <td>
+                    <td class="text-center">
                         @Html.ActionLink(" ", "AddUser", "UserProjects", new { projectId = ViewBag.Project.Id, userId = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-minus" })
                     </td>
                     <td>@item.UserName</td>
@@ -24,12 +40,17 @@
 
 <div class="form-group">
     <div class="col-md-12">
-        <h2>Users to add to project @ViewBag.Project</h2>
-        <table class="table table-bordered table-responsive">
+        <h2>Users to add to project <label class="badge badge-primary">@ViewBag.Project.Title</label></h2>
+        <table class="table table-bordered">
+            <tr>
+                <td class="text-center"><i class="fas fa-users"></i></td>
+                <td>@Html.DisplayNameFor(m => m.UsersProject.FirstOrDefault().UserName)</td>
+                <td>@Html.DisplayNameFor(m => m.UsersProject.FirstOrDefault().Email)</td>
+            </tr>
             @foreach (var item in Model.Users)
             {
                 <tr>
-                    <td>
+                    <td class="text-center">
                         @Html.ActionLink(" ", "RemoveUser", "UserProjects", new { projectId = ViewBag.Project.Id, userId = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-plus" })
                     </td>
                     <td>@item.UserName</td>
