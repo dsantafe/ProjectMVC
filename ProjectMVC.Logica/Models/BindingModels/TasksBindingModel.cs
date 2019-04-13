@@ -45,4 +45,23 @@ namespace ProjectMVC.Logica.Models.BindingModels
         [Required(ErrorMessage = "The field Project is required")]
         public int? ProjectId { get; set; }
     }
+
+    public class TasksUpdateBindingModel
+    {
+        [Display(Name = "Id")]
+        [Required(ErrorMessage = "The field Id is required")]
+        public int Id { get; set; }
+
+        [Display(Name = "Is Completed")]
+        [Required(ErrorMessage = "The field Is Completed is required")]
+        public bool IsCompleted { get; set; }       
+
+        [Display(Name = "RemainingWork")]
+        [Required(ErrorMessage = "The field Remaining Work is required")]
+        public int? RemainingWork { get; set; }
+
+        [Display(Name = "State")]
+        [Required(ErrorMessage = "The field State is required")]
+        public int? StateId { get; set; }        
+    }
 }

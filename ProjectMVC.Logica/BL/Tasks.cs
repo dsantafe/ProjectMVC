@@ -98,5 +98,28 @@ namespace ProjectMVC.Logica.BL
 
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// UPDATE TASK
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isCompleted"></param>
+        /// <param name="remainingWork"></param>
+        /// <param name="stateId"></param>
+        public void UpdateTasks(int id,
+            bool isCompleted,
+            int? remainingWork,
+            int? stateId)
+        {
+            DAL.Models.ProjectMVCEntities _context = new DAL.Models.ProjectMVCEntities();
+
+            var task = _context.Tasks.FirstOrDefault(x => x.Id == id);
+
+            task.IsCompleted = isCompleted;
+            task.RemainingWork = remainingWork;
+            task.StateId = stateId;
+
+            _context.SaveChanges();
+        }
     }
 }

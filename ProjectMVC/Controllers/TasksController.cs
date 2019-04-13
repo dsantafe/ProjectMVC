@@ -105,14 +105,14 @@ namespace ProjectMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult CalendarJSON(int? projectId)
+        public ActionResult GetTasksCalendar(int? projectId)
         {
             try
             {
                 Logica.BL.Tasks tasks = new Logica.BL.Tasks();
-                var listTasks = tasks.GetTasks(projectId, null);                
+                var listTasks = tasks.GetTasks(projectId, null);
 
-                var listTasksCalendarViewModel = listTasks.Select(x => new Logica.Models.ViewModels.TasksCalendarViewModel
+                var listTasksCalendarViewModel = listTasks.Select(x => new Logica.Models.ViewModels.TasksGetTasksCalendarViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,
@@ -122,7 +122,7 @@ namespace ProjectMVC.Controllers
                     End = x.ExpirationDate.Value.ToString("yyyy-MM-dd HH:mm:ss"),
                     TextColor = "#000000"
                 }).ToList();
-                
+
                 var json = Json(new
                 {
                     ListTasksCalendar = listTasksCalendarViewModel,
@@ -141,7 +141,7 @@ namespace ProjectMVC.Controllers
             }
         }
 
-        public ActionResult GetTasksJSON(int? id)
+        public ActionResult Details(int? id)
         {
             try
             {
@@ -156,18 +156,57 @@ namespace ProjectMVC.Controllers
                     ExpirationDate = x.ExpirationDate.Value.ToString("yyyy-MM-dd HH:mm:ss"),
                     Effort = x.Effort,
                     RemainingWork = x.RemainingWork,
-                    State = x.States.Name,
+                    StateId = x.StateId,
                     Activity = x.Activities.Name,
                     Priority = x.Priorities.Name
                 }).FirstOrDefault();
 
+                Logica.BL.States states = new Logica.BL.States();
+                var listStates = states.GetStates();
+
                 var json = Json(new
                 {
                     Task = taskViewModel,
+                    States = listStates,
                     IsSuccessful = true
                 });
 
-                return json;                
+                return json;
+            }
+            catch (Exception ex)
+            {
+                return Json(new Models.ResponseViewModel
+                {
+                    IsSuccessful = false,
+                    Errors = new List<string> { ex.Message }
+                });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Update(Logica.Models.BindingModels.TasksUpdateBindingModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Json(new Models.ResponseViewModel
+                    {
+                        IsSuccessful = false,
+                        Errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()
+                    });
+
+                Logica.BL.Tasks tasks = new Logica.BL.Tasks();
+                tasks.UpdateTasks(model.Id,
+                    model.IsCompleted,
+                    model.RemainingWork,
+                    model.StateId);
+
+                var json = Json(new
+                {
+                    IsSuccessful = true
+                });
+
+                return json;
             }
             catch (Exception ex)
             {
