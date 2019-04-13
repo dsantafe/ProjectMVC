@@ -1,4 +1,5 @@
-﻿
+﻿@model ProjectMVC.Logica.Models.ViewModels.UserProjectsIndexViewModel
+
 @{
     ViewBag.Title = "Index";
 }
@@ -7,11 +8,11 @@
 <div class="form-group">
     <div class="col-md-12">
         <table class="table table-bordered table-responsive">
-            @foreach (ProjectMVC.Logica.Models.ViewModels.UserProjectsIndexViewModel item in ViewBag.ListUsersProject)
+            @foreach (var item in Model.UsersProject)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(" ", "AddUser", "UserProjects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-minus" })
+                        @Html.ActionLink(" ", "AddUser", "UserProjects", new { projectId = ViewBag.Project.Id, userId = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-minus" })
                     </td>
                     <td>@item.UserName</td>
                     <td>@item.Email</td>
@@ -25,11 +26,11 @@
     <div class="col-md-12">
         <h2>Users to add to project @ViewBag.Project</h2>
         <table class="table table-bordered table-responsive">
-            @foreach (ProjectMVC.Logica.Models.ViewModels.UserProjectsIndexViewModel item in ViewBag.ListUsers)
+            @foreach (var item in Model.Users)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(" ", "RemoveUser", "UserProjects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-plus" })
+                        @Html.ActionLink(" ", "RemoveUser", "UserProjects", new { projectId = ViewBag.Project.Id, userId = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-user-plus" })
                     </td>
                     <td>@item.UserName</td>
                     <td>@item.Email</td>
