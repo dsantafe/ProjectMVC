@@ -64,6 +64,7 @@
     <Compile Include="Models\DB\Tasks.cs" />
     <Compile Include="Models\DB\Tenants.cs" />
     <Compile Include="Models\ViewModels\ProjectsViewModel.cs" />
+    <Compile Include="Models\ViewModels\ResponseViewModel.cs" />
     <Compile Include="Models\ViewModels\TasksViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

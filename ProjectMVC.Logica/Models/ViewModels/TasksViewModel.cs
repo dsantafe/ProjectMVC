@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectMVC.Logica.Models.ViewModels
 {
+    #region TasksIndexViewModel
     public class TasksIndexViewModel
     {
         [Display(Name = "Id")]
@@ -35,4 +36,31 @@ namespace ProjectMVC.Logica.Models.ViewModels
         [Display(Name = "Priority")]
         public string Priority { get; set; }
     }
+    #endregion
+
+    #region TasksGetTasksCalendarViewModel
+    public class TasksGetTasksCalendarViewModel
+    {
+        [Display(Name = "Id")]
+        public int Id { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Start")]
+        public string Start { get; set; }
+
+        [Display(Name = "End")]
+        public string End { get; set; }
+
+        [Display(Name = "All Day")]
+        public bool AllDay { get; set; }
+
+        [Display(Name = "Color")]
+        public string Color { get; set; }
+
+        [Display(Name = "TextColor")]
+        public string TextColor { get; set; }
+    } 
+    #endregion
 }
