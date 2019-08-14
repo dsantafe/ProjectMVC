@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Projects Json</h2>
+
+@Html.ActionLink(" ", "Create", "ProjectsJson", null, new { @class = "btn btn-primary fas fa-plus-circle" })
+
+<div id="divErrors"
+     class="alert alert-danger alert-dismissible fade show" role="alert"
+     style="display:none">
+
+    <strong>
+        <span id="errors"></span>
+    </strong>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<table id="gridProjects" class="table table-bordered">
+    <tr>        
+        <td>Title</td>
+        <td>Details</td>
+        <td>Expected Completion Date</td>
+        <td>Created At</td>
+        <td>Updated At</td>
+        <td></td>
+    </tr>
+</table>
+
+<script>
+
+    $(function () {
+        //code here
+        GetProjects();
+    });
+
+    function GetProjects() {
+        //GET - /controller/action/id
+        $.get('/ProjectsJson/GetProjects').done(function (data) {
+
+            var isSuccessul = data.IsSuccessful;
+
+            if (isSuccessul) {
+                //code here its ok
+
+                $.each(data.Data, function (idx, project) {
+
+                    //display grid
+                    var $grid = $('#gridProjects');
+
+                    //create row
+                    var $tr = $('<tr></tr>');
+                    //add columns
+                    $tr.append('<td>' + project.Title + '</td>');
+                    $tr.append('<td>' + project.Details + '</td>');
+                    $tr.append('<td>' + project.ExpectedCompletionDateString + '</td>');
+                    $tr.append('<td>' + project.CreatedAtString + '</td>');
+                    $tr.append('<td>' + project.UpdatedAtString + '</td>');
+
+                    //create column
+                    var $td = $('<td></td');
+                    $td.append('<a class="btn btn-primary btn-sm fas fa-edit" href="/ProjectsJson/Edit/' + project.Id + '"/>');
+                    $td.append('<a class="btn btn-primary btn-sm fas fa-info-circle" href="/ProjectsJson/Details/' + project.Id + '"/>');
+
+                    //add row
+                    $tr.append($td);
+
+                    //add grid
+                    $grid.append($tr);
+                });
+
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+
+        });
+    }
+
+</script>

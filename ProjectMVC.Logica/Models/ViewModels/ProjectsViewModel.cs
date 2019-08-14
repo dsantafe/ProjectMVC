@@ -17,11 +17,20 @@ namespace ProjectMVC.Logica.Models.ViewModels
         [Display(Name = "ExpectedCompletionDate")]
         public DateTime? ExpectedCompletionDate { get; set; }
 
+        [Display(Name = "ExpectedCompletionDate")]
+        public string ExpectedCompletionDateString { get; set; }
+
         [Display(Name = "CreatedAt")]
         public DateTime? CreatedAt { get; set; }
 
+        [Display(Name = "CreatedAt")]
+        public string CreatedAtString { get; set; }
+
         [Display(Name = "UpdatedAt")]
         public DateTime? UpdatedAt { get; set; }
+
+        [Display(Name = "UpdatedAt")]
+        public string UpdatedAtString { get; set; }
     }
 
     public class ProjectsDetailsViewModel
@@ -35,10 +44,19 @@ namespace ProjectMVC.Logica.Models.ViewModels
         [Display(Name = "ExpectedCompletionDate")]
         public DateTime? ExpectedCompletionDate { get; set; }
 
+        [Display(Name = "ExpectedCompletionDate")]
+        public string ExpectedCompletionDateString { get; set; }
+
         [Display(Name = "CreatedAt")]
         public DateTime? CreatedAt { get; set; }
 
+        [Display(Name = "CreatedAt")]
+        public string CreatedAtString { get; set; }
+
         [Display(Name = "UpdatedAt")]
         public DateTime? UpdatedAt { get; set; }
+
+        [Display(Name = "UpdatedAt")]
+        public string UpdatedAtString { get; set; }
     }
 }

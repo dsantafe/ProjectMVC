@@ -1,0 +1,86 @@
+﻿@model ProjectMVC.Logica.Models.BindingModels.ProjectsCreateBindingModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Project Json</h2>
+
+<div id="divErrors"
+     class="alert alert-danger alert-dismissible fade show" role="alert"
+     style="display:none">
+
+    <strong>
+        <span id="errors"></span>
+    </strong>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="form-row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.Title)
+        @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.Details)
+        @Html.EditorFor(m => m.Details, new { htmlAttributes = new { @class = "form-control" } })
+
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        @Html.LabelFor(m => m.ExpectedCompletionDate)
+        @Html.EditorFor(m => m.ExpectedCompletionDate, new { htmlAttributes = new { @class = "form-control" } })
+
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="col-md-12">
+        <br />
+        <button id="btnCreateProject" value="" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        @Html.ActionLink(" ", "Index", "ProjectsJson", null, new { @class = "btn btn-primary fas fa-undo-alt" })
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $('#btnCreateProject').click(function () {
+            CreateProject();
+        });
+    });
+
+    function CreateProject() {
+
+        //JSON 
+        var projectsCreateBindingModel = {
+            'Title': $('#Title').val(),
+            'Details': $('#Details').val(),
+            'ExpectedCompletionDate': $('#ExpectedCompletionDate').val()
+        };
+
+        //POST
+        $.post('/ProjectsJson/Create', projectsCreateBindingModel).done(function (data) {
+
+            var isSuccessul = data.IsSuccessful;
+
+            if (isSuccessul) {
+                //code here its ok
+                window.location.href = '/ProjectsJson/Index';
+
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+
+        });
+    }
+
+</script>

@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div id="divErrors"
+     class="alert alert-danger alert-dismissible fade show" role="alert"
+     style="display:none">
+
+    <strong>
+        <span id="errors"></span>
+    </strong>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<table class="table table-bordered table-info">
+    <tr>
+        <td>Title</td>
+        <td>Details</td>
+        <td>Expected Completion Date</td>
+        <td>Created At</td>
+        <td>Updated At</td>
+    </tr>
+    <tr>
+        <td><label id="Title"></label></td>
+        <td><label id="Details"></label></td>
+        <td><label id="ExpectedCompletionDate"></label></td>
+        <td><label id="CreatedAt"></label></td>
+        <td><label id="UpdatedAt"></label></td>
+    </tr>
+</table>
+
+<div class="form-row">
+    <div class="col-md-12">
+        <br />
+        @Html.ActionLink(" ", "Index", "ProjectsJson", null, new { @class = "btn btn-primary fas fa-undo-alt" })
+    </div>
+</div>
+
+<script>
+
+    var projectId = @ViewBag.ProjectId;
+
+    $(function () {
+        //code here
+        GetProject(projectId);
+    });
+
+    function GetProject(projectId) {
+
+        //GET /controller/action/id
+        $.get('/ProjectsJson/GetProject?id=' + projectId).done(function (data) {
+
+            var isSuccessul = data.IsSuccessful;
+
+            if (isSuccessul) {
+                //code here its ok
+
+                $('#Title').html(data.Data.Title);
+                $('#Details').html(data.Data.Details);
+                $('#ExpectedCompletionDate').html(data.Data.ExpectedCompletionDateString);
+                $('#CreatedAt').html(data.Data.CreatedAtString);
+                $('#UpdatedAt').html(data.Data.UpdatedAtString);
+
+            } else {
+                var errors = data.Errors;
+                displayValidationErrors(errors);
+            }
+
+        });
+
+    }
+
+</script>
