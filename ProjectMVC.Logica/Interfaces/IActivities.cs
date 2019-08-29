@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ProjectMVC.Logica.Interfaces
 {
@@ -13,5 +9,7 @@ namespace ProjectMVC.Logica.Interfaces
         void UpdateActivity(int id, string name, bool active);
 
         void DeleteActivity(int id);
+
+        List<Models.DB.Activities> GetActivities();
     }
 }

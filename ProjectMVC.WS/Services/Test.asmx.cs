@@ -1,4 +1,7 @@
-﻿using System.Web.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web.Services;
 
 namespace ProjectMVC.WS.Services
 {
@@ -17,9 +20,35 @@ namespace ProjectMVC.WS.Services
         /// </summary>
         /// <param name="name">NOMBRE DE LA ACTIVIDAD</param>
         [WebMethod]
-        public void CreateActivities(string name)
+        public void CreateActivity(string name)
         {
-            
+            Logica.Services.Activities activities = new Logica.Services.Activities();
+            activities.CreateActivity(name);
+        }
+
+        [WebMethod]
+        public string Base64Encode(string plainText)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        [WebMethod]
+        public string Base64Decode(string base64EndodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EndodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        [WebMethod]
+        public List<Logica.Models.DB.Activities> GetActivities()
+        {
+            var listActivities = new List<Logica.Models.DB.Activities>();
+
+            Logica.Services.Activities activities = new Logica.Services.Activities();
+            listActivities = activities.GetActivities();
+
+            return listActivities;
         }
     }
 }

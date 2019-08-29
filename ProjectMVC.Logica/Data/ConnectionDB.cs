@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace ProjectMVC.Logica.Data
@@ -37,7 +38,7 @@ namespace ProjectMVC.Logica.Data
             {
                 if (connection == null)
                 {
-                    string cnx = "Data Source = localhost;Initial Catalog=DB;User ID=xxx;Password=xxx";
+                    string cnx = ConfigurationManager.ConnectionStrings["Cnx"].ToString();
                     connection = new SqlConnection(cnx);
                     connection.Open();
                 }
