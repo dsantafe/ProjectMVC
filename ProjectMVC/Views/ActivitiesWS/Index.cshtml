@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProjectMVC.Logica.Models.ViewModels.ActivitiesIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Activities</h2>
+
+@Html.ActionLink(" ", "Create", "ActivitiesWS", null, new { @class = "btn btn-primary fas fa-plus-circle" })
+
+<table class="table table-bordered">
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.Name)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Active)
+        </td>
+        <td></td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", "Activities", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-edit" })
+                @Html.ActionLink(" ", "Details", "Activities", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-info-circle" })
+                @Html.ActionLink(" ", "Delete", "Activities", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-trash" })
+            </td>
+        </tr>
+    }
+
+</table>

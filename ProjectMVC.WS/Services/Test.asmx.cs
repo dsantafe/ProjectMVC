@@ -22,8 +22,11 @@ namespace ProjectMVC.WS.Services
         [WebMethod]
         public void CreateActivity(string name)
         {
+            Logica.BL.Utils utils = new Logica.BL.Utils();
+            string nameDecode = utils.Base64Decode(name);
+
             Logica.Services.Activities activities = new Logica.Services.Activities();
-            activities.CreateActivity(name);
+            activities.CreateActivity(nameDecode);
         }
 
         [WebMethod]
