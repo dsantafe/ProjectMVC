@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMVC.Logica", "Projec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMVC.WS", "ProjectMVC.WS\ProjectMVC.WS.csproj", "{B0C36601-55FD-47C6-A302-838D6F93913E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMVC.API", "ProjectMVC.API\ProjectMVC.API.csproj", "{EF1A2D5F-5091-465D-9530-2949587683EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B0C36601-55FD-47C6-A302-838D6F93913E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C36601-55FD-47C6-A302-838D6F93913E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C36601-55FD-47C6-A302-838D6F93913E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1A2D5F-5091-465D-9530-2949587683EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1A2D5F-5091-465D-9530-2949587683EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1A2D5F-5091-465D-9530-2949587683EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1A2D5F-5091-465D-9530-2949587683EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
